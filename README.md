@@ -47,6 +47,12 @@ depending on market conditions.
 
 **Metrics used:** Sharpe Ratio, Equity Curve, Signal Returns
 
+### Project 3 — RSI Strategy
+**Stocks:** INTC, KO (2020–2026)
+**Finding:** RSI provides downside protection on volatile 
+stocks but misses gains on trending stocks.
+**Sharpe:** INTC 0.05 vs B&H 0.47 — lower but smoother
+
 ---
 
 ## Concepts Covered So Far
