@@ -1,22 +1,14 @@
+import sys
+from pathlib import Path
+
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from metrics import calculate_rsi, print_metrics_summary
 
 
-def sharpe_ratio(returns):
-    return (returns.mean() / returns.std()) * (252 ** 0.5)  # Annualized Sharpe ratio
-
-def calculate_rsi(data, window=14):
-    delta = data['Close'].diff()
-    gain = delta.where(delta > 0, 0)
-    loss = -delta.where(delta < 0, 0)
-
-    avg_gain = gain.rolling(window=window).mean()
-    avg_loss = loss.rolling(window=window).mean()
-
-    rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
-    return rsi
-
-
-def perform_rsi_analysis(data, window=14):
+def perform_rsi_analysis(data, window=14, label="RSI"):
     df = data.copy()  # ✅ never modify original
     df.columns = df.columns.get_level_values(0)
     df['Returns'] = df['Close'].pct_change()
@@ -33,10 +25,7 @@ def perform_rsi_analysis(data, window=14):
     df['Equity_Curve'] = (1 + df['Strategy_Returns']).cumprod()
     df['Buy_and_Hold'] = (1 + df['Returns']).cumprod()
     
-    strat_sharpe = sharpe_ratio(df['Strategy_Returns'])
-    bh_sharpe = sharpe_ratio(df['Returns'])
-    
-    print(f"Strategy Sharpe Ratio: {strat_sharpe:.2f}")
-    print(f"Buy and Hold Sharpe Ratio: {bh_sharpe:.2f}")
+    print_metrics_summary(f'{label} Strategy', df['Strategy_Returns'], df['Equity_Curve'])
+    print_metrics_summary(f'{label} Buy & Hold', df['Returns'], df['Buy_and_Hold'])
     
     return df
