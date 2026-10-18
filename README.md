@@ -81,9 +81,9 @@ Every strategy in this repo is tested properly:
 ## Roadmap
 
 - [x] SMA crossover strategy
-- [ ] Mean reversion strategy
-- [ ] Multi-stock comparison
-- [ ] Maximum drawdown metric
+- [x ] Mean reversion strategy
+- [x ] Multi-stock comparison
+- [x ] Maximum drawdown metric
 - [ ] Portfolio of strategies
 - [ ] Walk-forward validation
 
